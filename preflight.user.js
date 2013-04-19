@@ -3,6 +3,7 @@
 // @version    0.0.3
 // @description  shows the preview of a thread response under the message field
 // @match      http://pouet.net/topic.php?which*
+// @match      http://www.pouet.net/topic.php?which*
 // @copyright  2013+, mog@trbl.at
 // ==/UserScript==
 

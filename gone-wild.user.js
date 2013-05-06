@@ -17,4 +17,5 @@ function addCss(cssString) {
 }
 
 addCss ( 
+    'input,textarea {background:#dbcaca; color:black;}'+
     'html {-webkit-filter: hue-rotate(141deg);-moz-filter: hue-rotate(141deg);filter: hue-rotate(141deg);}');

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       DemozooSugar
-// @version    0.0.2
+// @version    0.0.3
 // @description  Fetches more information about the prod from Demozoo.org, and displays it.
 // @match      http://pouet.net/prod.php?which=*
 // @copyright  2013+, mog@trbl.at
@@ -20,6 +20,7 @@ var prodName = ((document.querySelector('table>tbody>tr>td>b>font') || {})
         .text || "")
         .toLowerCase();
 
+console.log("name", prodName);
 
 //search the prod on demozoo, by using the prodname
 request(API_ACTION_SEARCH, prodName, prodInfoLoaded, prodInfoLoadFail);
@@ -50,7 +51,7 @@ function prodInfoLoaded(prodInfoAsJSON) {
 }
 
 function prodInfoLoadFail(errorMessage) {
-    //console.error("fail", errorMessage);
+    console.error("fail", errorMessage);
 }
 
 function findProdInDemozooResponse(prodInfo) {
@@ -74,7 +75,7 @@ function request(action, term, callbackOnResult, callbackOnLoadFail) {
 
     GM_xmlhttpRequest({
         method: 'GET',
-        url: API_BASE + action + term,
+        url: API_BASE + action + encodeURIComponent(term),
 
         onload: function (response) {
             callbackOnResult(JSON.parse(response.responseText));

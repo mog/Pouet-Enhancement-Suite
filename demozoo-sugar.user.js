@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       DemozooSugar
-// @version    0.0.1
+// @version    0.0.2
 // @description  Fetches more information about the prod from Demozoo.org, and displays it.
 // @match      http://pouet.net/prod.php?which=*
 // @copyright  2013+, mog@trbl.at
@@ -50,7 +50,7 @@ function prodInfoLoaded(prodInfoAsJSON) {
 }
 
 function prodInfoLoadFail(errorMessage) {
-    console.error("fail", errorMessage);
+    //console.error("fail", errorMessage);
 }
 
 function findProdInDemozooResponse(prodInfo) {

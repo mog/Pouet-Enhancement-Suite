@@ -4,7 +4,7 @@
 // @description  Fetches more information about the prod from Demozoo.org, and displays it.
 // @match      http://pouet.net/prod.php?which=*
 // @copyright  2013+, mog@trbl.at
-// @downloadURL 
+// @downloadURL https://github.com/mog/Pouet-Enhancement-Suite/raw/master/demozoo-sugar.user.js
 // ==/UserScript==
 var API_BASE = "http://dev.demozoo.org",
     API_ACTION_SEARCH = "/search/live/?q=";
@@ -15,7 +15,7 @@ var appendToElement = document.querySelector('#mainDownload')
 var prodName = ((document.querySelector('table>tbody>tr>td>b>font') || {})
     .innerText || "")
     .toLowerCase(),
-  groupName = ((document.querySelector('table>tbody>tr>td>b>a') || {})
+    groupName = ((document.querySelector('table>tbody>tr>td>b>a') || {})
         .text || "")
         .toLowerCase();
 

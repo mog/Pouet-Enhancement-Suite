@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       DemozooSugar
-// @version    0.0.3
+// @version    0.0.4
 // @description  Fetches more information about the prod from Demozoo.org, and displays it.
 // @match      http://pouet.net/prod.php?which=*
 // @copyright  2013+, mog@trbl.at
@@ -19,8 +19,6 @@ var prodName = ((document.querySelector('table>tbody>tr>td>b>font') || {})
     groupName = ((document.querySelector('table>tbody>tr>td>b>a') || {})
         .text || "")
         .toLowerCase();
-
-console.log("name", prodName);
 
 //search the prod on demozoo, by using the prodname
 request(API_ACTION_SEARCH, prodName, prodInfoLoaded, prodInfoLoadFail);

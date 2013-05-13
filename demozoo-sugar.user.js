@@ -48,7 +48,7 @@ function prodInfoLoaded(prodInfoAsJSON) {
 }
 
 function prodInfoLoadFail(errorMessage) {
-    console.error("fail", errorMessage);
+    //console.error("fail", errorMessage);
 }
 
 function findProdInDemozooResponse(prodInfo) {

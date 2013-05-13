@@ -19,7 +19,6 @@ var prodName = ((document.querySelector('table>tbody>tr>td>b>font') || {})
         .text || "")
         .toLowerCase();
 
-
 //search the prod on demozoo, by using the prodname
 request(API_ACTION_SEARCH, prodName, prodInfoLoaded, prodInfoLoadFail);
 

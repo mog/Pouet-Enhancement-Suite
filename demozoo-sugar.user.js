@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       DemozooSugar
 // @version    0.0.4
-// @description  Fetches more information about the prod from Demozoo.org, and displays it.
+// @description  Searched prod on Demozoo and shows a link on Pouet to it (if it finds it).
 // @match      http://pouet.net/prod.php?which=*
 // @copyright  2013+, mog@trbl.at
 // @downloadURL https://github.com/mog/Pouet-Enhancement-Suite/raw/master/demozoo-sugar.user.js

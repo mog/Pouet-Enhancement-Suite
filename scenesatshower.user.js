@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          SceneSatShower
 // @description   SceneSat Show Announce
-// @version    0.0.1
+// @version    0.0.2
 // @include http://pouet.net/
 // @copyright  2013+, mog@trbl.at
 // @downloadURL https://github.com/mog/Pouet-Enhancement-Suite/raw/master/scenesatshower.user.js
@@ -31,7 +31,7 @@ img.setAttribute("src", SCENESAT_LOGO);
 img.setAttribute("style", "float:left;");
 boxTitle.appendChild(img);
 
-boxTitle.innerHTML += "upcomming scenesat shows";
+boxTitle.innerHTML += "upcoming scenesat shows";
 
 holder.setAttribute("class", "box");
 holder.setAttribute("cellspacing", "1");
@@ -103,6 +103,6 @@ var Countdown = function (dateString, element) {
             hourDelta = dayDelta - (hours * 3600),
             minutes = Math.floor(hourDelta / 60);
         
-        element.innerText = ':: in ' + days + 'days, ' + hours + 'hours, ' + minutes + 'minutes';
+        element.innerHTML = ':: in ' + days + 'days, ' + hours + 'hours, ' + minutes + 'minutes';
     }
 };

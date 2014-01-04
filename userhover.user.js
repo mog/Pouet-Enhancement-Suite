@@ -1,23 +1,28 @@
 // ==UserScript==
 // @name       UserHover
-// @version    0.0.1
+// @version    0.0.2
 // @description  Shows information about user on hovering a userlink
 // @match      *://www.pouet.net/*
 // @copyright  2014+, mog@trbl.at
 // @downloadURL https://github.com/mog/Pouet-Enhancement-Suite/raw/master/userhover.user.js
 // @updateURL https://github.com/mog/Pouet-Enhancement-Suite/raw/master/userhover.user.js
 // ==/UserScript==
-var STYLE = '#hoverInfo{border:2px solid #000;}' +
-    '.hoverHeader{background-color:#325F92;padding:4px;border-bottom:1px solid #000;}' +
-    '.hoverBody{background-color:#4077B8; padding:7px;}' +
-    '.hoverHeader:before,.hoverHeader:after{content:"";position:absolute;border-style:solid;display:block;width:0;}' +
-    '.hoverHeader:before{top:-2px;left:-18px;border-width: 13px 18px 13px 0;border-color: rgba(0, 0, 0, 0) #000;}' +
-    '.hoverHeader:after{top:0;left: -15px;border-width: 11px 15px 11px 0;border-color: rgba(0, 0, 0, 0) #325F92;}' +
+var STYLE = '#hoverInfo{border:2px solid #000;position:absolute;}' +
+    '#hoverHeader{background-color:#325F92;padding:4px;border-bottom:1px solid #000;}' +
+    '#hoverBody{background-color:#4077B8; padding:7px;}' +
+    '#hoverHeader:before,#hoverHeader:after{content:"";position:absolute;border-style:solid;display:block;width:0;}' +
+    '#hoverHeader:before{top:-2px;border-color: rgba(0, 0, 0, 0) #000;}' +
+    '#hoverHeader:after{top:0;border-color: rgba(0, 0, 0, 0) #325F92;}' +
     '.hoverRow{width: 110px;display: inline-block;}' +
-    '.hoverBody.hoverLoading{padding:16px;background-image:url(/content/avatars/sucks-rot2.gif);background-repeat: no-repeat;background-position: 50% 50%;';
+    '#hoverBody.hoverLoading{padding:16px;background-image:url(/content/avatars/sucks-rot2.gif);background-repeat: no-repeat;background-position: 50% 50%;}' +
+    '.hoverLeft #hoverHeader:before{left:-18px;border-width: 13px 18px 13px 0;}' +
+    '.hoverLeft #hoverHeader:after{left: -15px;border-width: 11px 15px 11px 0;}' +
+    '.hoverRight #hoverHeader:before{top:-2px;right:-18px;border-width: 13px 0 13px 18px;}' +
+    '.hoverRight #hoverHeader:after{top:0;right: -15px;border-width: 11px 0 11px 15px;}';
 
 //-- maybe don't edit below here --
 var _cache = {},
+    _currentelement,
     _delayTimer,
     _holder = document.createElement('div'),
     _linksToUsers = document.querySelectorAll('a[href^="user.php?who="]'),
@@ -27,6 +32,7 @@ styleElement.innerHTML = STYLE;
 document.body.appendChild(styleElement);
 
 _holder.setAttribute("id", "hoverInfo");
+hideHover();
 document.body.appendChild(_holder)
 _holder.addEventListener('mouseleave', hideHover, false);
 
@@ -61,27 +67,27 @@ function stopDelay(e) {
 }
 
 function requestUserPage(element) {
+
+    _currentElement = element;
+
     stopDelay();
     element.removeEventListener('mouseleave', stopDelay, false);
 
+    var link = element.href || element.parentNode.href,
+        id = link.split('who=')[1],
+        name = element.getAttribute('data-title') || element.innerHTML;
+
+    _holder.innerHTML = '<div id="hoverHeader"><a href="' + link + '">' + name + '</a></div>' +
+        '<div id="hoverBody" class="hoverLoading"></div>';
+
+    updatePosition();
+
     showHover();
-
-    var scrollOffset = getScrollOffset(),
-        elementPos = element.getBoundingClientRect(),
-        positionString = 'position:absolute;left:' + (elementPos.right + scrollOffset.x + 16) + 'px;top:' + (elementPos.top + scrollOffset.y - (elementPos.height * .5)) + 'px;',
-        link = element.href || element.parentNode.href,
-        id = link.split('who=')[1];
-
-    _holder.style.cssText = positionString;
-
-    //hacky loadstate view
-    var name = element.getAttribute('data-title') || element.innerHTML;
-    _holder.innerHTML = '<div class="hoverHeader"><a href="' + link + '">' + name + '</a></div>' +
-        '<div class="hoverBody hoverLoading"></div>';
 
     if (_cache[id]) {
 
         fillHoverThing(_cache[id]);
+        updatePosition();
 
     } else {
         requestURL(link, function (response) {
@@ -92,6 +98,7 @@ function requestUserPage(element) {
                 _cache[userInfo.id] = userInfo;
 
                 fillHoverThing(userInfo);
+                updatePosition();
             }
         });
     }
@@ -99,12 +106,14 @@ function requestUserPage(element) {
 
 function fillHoverThing(info) {
     var rowStyle = '"';
-    _holder.innerHTML = '<div class="hoverHeader"><a href="' + info.link + '">' + info.name + '</a> (' + info.level + ')</div>' +
-        '<div class="hoverBody">' +
+    _holder.innerHTML = '<div id="hoverHeader"><a href="' + info.link + '">' + info.name + '</a> (' + info.level + ')</div>' +
+        '<div id="hoverBody">' +
         '<div><span class="hoverRow">Pouetan since:</span><span>' + info.created + '</span></div>' +
         '<div><span class="hoverRow">Glöps:</span><span>' + info.glops + '</span></div>' +
         '<div><span class="hoverRow">Prod contributions:</span><span>' + info.contributions + '<span></div>' +
         '</div>';
+
+    updatePosition();
 }
 
 function parseUserPage(userPage) {
@@ -138,6 +147,28 @@ function parseUserPage(userPage) {
     };
 }
 
+function updatePosition() {
+
+    _holder.style.opacity = 0;
+    //browser wraps the hoverThing if it's close to the right border, messing up the actual width
+    _holder.style.left = 0;
+    var scrollOffset = getScrollOffset(),
+        elementPos = _currentElement.getBoundingClientRect(),
+        screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+    _holder.style.top = (elementPos.top + scrollOffset.y - (elementPos.height * .5)) + 'px';
+
+    //enough room to the right, show arrow on the left
+    if ((screenWidth - (elementPos.right + scrollOffset.x + 16)) >= 300) {
+        _holder.setAttribute("class", "hoverLeft");
+        _holder.style.left = (elementPos.right + scrollOffset.x + 16) + 'px';
+    } else {
+        _holder.setAttribute("class", "hoverRight");
+        _holder.style.left = (elementPos.left - scrollOffset.x - 16 - _holder.getBoundingClientRect().width) + 'px';
+    }
+    _holder.style.opacity = 1;
+}
+
 //== helper functions ==
 function getScrollOffset() {
     var doc = document.documentElement,
@@ -161,9 +192,9 @@ function requestURL(url, callback) {
 }
 
 function hideHover() {
-    _holder.style.display = 'none';
+    _holder.style.opacity = 0;
 }
 
 function showHover() {
-    _holder.style.display = 'block';
+    _holder.style.opacity = 1;
 }

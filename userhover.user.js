@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       UserHover
-// @version    0.0.2
+// @version    0.0.1
 // @description  Shows information about user on hovering a userlink
 // @match      *://www.pouet.net/*
 // @copyright  2014+, mog@trbl.at
@@ -192,9 +192,9 @@ function requestURL(url, callback) {
 }
 
 function hideHover() {
-    _holder.style.opacity = 0;
+    _holder.style.display = "none";
 }
 
 function showHover() {
-    _holder.style.opacity = 1;
+    _holder.style.display = "block";
 }

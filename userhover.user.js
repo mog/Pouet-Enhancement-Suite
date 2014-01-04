@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       UserHover
-// @version    0.0.1
+// @version    0.0.3
 // @description  Shows information about user on hovering a userlink
 // @match      *://www.pouet.net/*
 // @copyright  2014+, mog@trbl.at
@@ -149,9 +149,9 @@ function parseUserPage(userPage) {
 
 function updatePosition() {
 
-    _holder.style.opacity = 0;
     //browser wraps the hoverThing if it's close to the right border, messing up the actual width
     _holder.style.left = 0;
+
     var scrollOffset = getScrollOffset(),
         elementPos = _currentElement.getBoundingClientRect(),
         screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -166,7 +166,6 @@ function updatePosition() {
         _holder.setAttribute("class", "hoverRight");
         _holder.style.left = (elementPos.left - scrollOffset.x - 16 - _holder.getBoundingClientRect().width) + 'px';
     }
-    _holder.style.opacity = 1;
 }
 
 //== helper functions ==
@@ -183,18 +182,18 @@ function getScrollOffset() {
 
 function requestURL(url, callback) {
     var request = new XMLHttpRequest();
-    request.responseType = 'document';
     request.onreadystatechange = function () {
         callback(request);
     };
     request.open('GET', url);
+    request.responseType = 'document';
     request.send(null);
 }
 
 function hideHover() {
-    _holder.style.display = "none";
+    _holder.style.visibility = "hidden";
 }
 
 function showHover() {
-    _holder.style.display = "block";
+    _holder.style.visibility = "visible";
 }

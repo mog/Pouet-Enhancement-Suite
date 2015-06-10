@@ -23,3 +23,9 @@ Screenshots on prod and group pages
 [![Screenshot WindowShopping PartyPage](http://i.imgur.com/aToExwts.png)](http://i.imgur.com/aToExwt.png)
 
 *[Install windowShopping](https://github.com/mog/Pouet-Enhancement-Suite/raw/master/windowShopping.user.js)*
+
+
+## Similar projects like this
+p01 has more scripts at [https://github.com/p01/pouet.net.user.js](https://github.com/p01/pouet.net.user.js)
+
+pouet thread about user scripts [https://www.pouet.net/topic.php?which=9287&page=1](http://www.pouet.net/topic.php?which=9287&page=1)

@@ -9,6 +9,11 @@ Chrome [TamperMonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhd
 
 
 ## Scripts
+###preflight.user.js
+Live preview as you type for BBS and prod comment  
+[![Screenshot userHover](http://i.imgur.com/cR6PyWls.png)](http://i.imgur.com/cR6PyWl.png)  
+*[Install preflight](https://github.com/mog/Pouet-Enhancement-Suite/raw/master/preflight.user.js)*
+
 ### userhover.user.js
 Hover a user, get info  
 [![Screenshot userHover](http://i.imgur.com/A3lvmYjm.png)](http://i.imgur.com/A3lvmYj.png)  

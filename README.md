@@ -3,6 +3,11 @@ Pouet-Enhancement-Suite
 ## About
 Collection of UserScripts to improve the Demoscene Website [Pouet](//pouet.net)
 
+## userhover.user.js
+Hover a user, get info
+
+[![Screenshot userHover](http://i.imgur.com/A3lvmYjm.png)](http://i.imgur.com/A3lvmYj.png)
+
 
 ## windowShopping.user.js
 Screenshots on prod and group pages

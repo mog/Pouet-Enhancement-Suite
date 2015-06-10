@@ -10,8 +10,11 @@
 // ==/UserScript==
 var textArea = document.querySelector("textarea"),
     bb_buttons = document.querySelector("#pouet_bb_editor"),
+    quote_buttons = document.querySelectorAll(".foot .tools a"),
+    
     form = document.querySelector('form[action="add.php"]'),
     previewFrame = document.createElement('iframe'),
+    
     isProdPage = !!document.querySelector('textarea[name="comment"]'),
     cooldownTimer,
     lastHash = 0;
@@ -24,6 +27,11 @@ previewFrame.onload = resizePreview;
 
 textArea.oninput = startKBPreviewUpdateDDoSPreventionTimer;
 bb_buttons.onclick = startKBPreviewUpdateDDoSPreventionTimer;
+
+for(var q = 0; q < quote_buttons.length; q++){
+    console.log(quote_buttons[q]);
+    quote_buttons[q].onclick = startKBPreviewUpdateDDoSPreventionTimer;
+}
 
 //from http://stackoverflow.com/a/7616484
 function hashString(str) {
